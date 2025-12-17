@@ -7,6 +7,24 @@ class LessonBase(BaseModel):
     description: str
     
 
+
+
+class LessonCreate(LessonBase):
+    pass 
+
+
+class LessonUpdate(LessonCreate):
+    pass
+
+
+class LessonUpdatePartial(LessonUpdate):
+    module_id: int | None = None
+    title: str | None = None
+    order: str | None = None
+    description: str | None = None
+
+
+
 class Lesson(LessonBase):
     model_config = ConfigDict(from_attributes=True)
     
