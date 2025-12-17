@@ -10,17 +10,9 @@ from sqlalchemy.engine import Result
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status
 
-from core.models.models_db import ContentBlock, Lesson
+from core.models.models_db.model import ContentBlock, Lesson
 from api_v1.content_blocks.schemas import ContentBlockCreate, ContentBlockUpdatePartial, ContentBlockUpdate
 
-
-async def get_contentblocks(
-    session: AsyncSession
-) -> list[ContentBlock]:
-    stmt = select(ContentBlock).order_by(ContentBlock.id)
-    result: Result = await session.execute(stmt)
-    content_blocks = result.scalars().all()
-    return list(content_blocks)
 
 
 async def get_by_id(
@@ -32,7 +24,7 @@ async def get_by_id(
 
 async def get_by_lesson_id(
     session: AsyncSession,
-    lesson_id: int
+    lesson_id: int,
 ) -> list[ContentBlock]:
     stmt = select(ContentBlock).where(ContentBlock.lesson_id == lesson_id).order_by(ContentBlock.id)
     result: Result = await session.execute(stmt)

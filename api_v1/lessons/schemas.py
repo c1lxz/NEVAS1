@@ -3,7 +3,7 @@ from pydantic import BaseModel, ConfigDict
 class LessonBase(BaseModel):
     module_id: int
     title: str
-    order: str
+    order: int
     description: str
     
 
@@ -20,7 +20,7 @@ class LessonUpdate(LessonCreate):
 class LessonUpdatePartial(LessonUpdate):
     module_id: int | None = None
     title: str | None = None
-    order: str | None = None
+    order: int | None = None
     description: str | None = None
 
 

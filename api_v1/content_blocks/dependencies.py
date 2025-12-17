@@ -28,7 +28,7 @@ async def contentblock_by_lesson_id(
 ) -> list[ContentBlock]:
     content_blocks = await crud.get_by_lesson_id(session=session, lesson_id=lesson_id)
     if content_blocks is not None:
-        return list(ContentBlock)
+        return list(content_blocks)
     
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
