@@ -39,6 +39,7 @@ async def create_lesson(
     lesson = Lesson(**lesson_in.model_dump())
     session.add(lesson)
     await session.commit()
+    await session.refresh(lesson)
     return lesson
 
 

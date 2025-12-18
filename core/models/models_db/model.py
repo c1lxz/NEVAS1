@@ -1,7 +1,7 @@
 from ast import Module
 from sqlalchemy.orm import Mapped, relationship, mapped_column
 from core.models.base import Base
-from sqlalchemy import String, Text, CHAR, VARCHAR, ForeignKey, Integer
+from sqlalchemy import String, Text, CHAR, VARCHAR, ForeignKey, Integer, UniqueConstraint
 
 
 class Course(Base):
@@ -28,7 +28,10 @@ class Module(Base):
     
     
 class Lesson(Base):
-    __tablename__ = "lessons"
+    __tablename__ = "lessons" 
+    __table_args__ = (
+        UniqueConstraint("module_id", "order", name="uq_lesson_module_order"),
+    )
     
     title: Mapped[str] = mapped_column(CHAR(100))
     order: Mapped[int] = mapped_column(Integer)
@@ -43,7 +46,7 @@ class ContentBlock(Base):
     __tablename__ = "content_blocks"
     
     type: Mapped[str] = mapped_column(VARCHAR)
-    order: Mapped[int] = mapped_column(Integer)
+    order: Mapped[int] = mapped_column(primary_key=True)
     content: Mapped[str] = mapped_column(Text)
     lesson_id: Mapped[int] = mapped_column(ForeignKey("lessons.id"))
     lesson: Mapped["Lesson"] = relationship(back_populates="content_blocks")
